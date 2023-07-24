@@ -1,26 +1,31 @@
 const express = require("express");
 const cors=require("cors");
 const nodemailer = require("nodemailer");
+const dotenv=require("dotenv")
+dotenv.config();
 const app=express();
-app.use(cors({
-    origin:"*"
-}));
+
+
+//middleware
+app.use(cors({origin:"*"}));
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true,
 }));
+
+
 app.post("/signup", async (req, res) => {
   const { email } = req.body;
   const verificationCode = Math.floor(Math.random() * 1000000);
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "youremailid@gmail.com",
-      pass: "password",
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
     },
   });
   const mailOptions = {
-    from: "youremailid@gmail.com",
+    from: process.env.EMAIL,
     to: email,
     subject: "Email Verification",
     text: `OTP :${verificationCode}`,
@@ -38,6 +43,6 @@ app.post("/signup", async (req, res) => {
 
 
 app.listen(8000,()=>{
-    console.log(`server 8000`);
+    console.log(`server 8000`); 
 });
 
