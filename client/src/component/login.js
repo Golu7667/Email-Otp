@@ -12,7 +12,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/signup", { email });
+      const res = await axios.post("https://otp-h1og.onrender.com/signup", { email });
       toast.success('Otp send successfully!', { autoClose: 5000 });
       setMessage(res.data.message);
     } catch (error) {
